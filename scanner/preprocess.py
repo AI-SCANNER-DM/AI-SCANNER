@@ -1,0 +1,5 @@
+load_image()
+convert_to_grayscale()
+enhance_contrast()
+remove_noise()
+save_processed_image()
