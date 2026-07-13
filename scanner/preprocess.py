@@ -23,3 +23,8 @@ def preprocess_image(image_path):
     deskewed = cv2.warpAffine(binary, M, (w, h), flags=cv2.INTER_CUBIC)
     
     return deskewed
+if __name__ == "__main__":
+    test_path = r"C:\Users\Admin\OneDrive\Desktop\Ai_digitalised_document_scanner\assets\handwriting.jpg"
+    result = preprocess_image(test_path)
+    cv2.imwrite(r"C:\Users\Admin\OneDrive\Desktop\Ai_digitalised_document_scanner\assets\handwriting.jpg", result)
+    print("Preprocessing done — check assets/test_output.jpg")

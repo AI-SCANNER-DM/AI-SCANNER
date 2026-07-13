@@ -9,8 +9,7 @@ def select_image_and_run():
     if not image_path:
         return 
 
-    chosen_font = font_var.get()  ''
-
+    chosen_font = font_var.get()
     try:
         run_pipeline(image_path, chosen_font)
         messagebox.showinfo("Success", "PDF generated successfully!")
