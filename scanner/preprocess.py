@@ -24,7 +24,7 @@ def preprocess_image(image_path):
     
     return deskewed
 if __name__ == "__main__":
-    test_path = r"C:\Users\Admin\OneDrive\Desktop\Ai_digitalised_document_scanner\assets\handwriting.jpg"
+    test_path = r"C:\Users\Admin\OneDrive\Desktop\Ai_digitalised_document_scanner\assets\FT_01.jpg"
     result = preprocess_image(test_path)
-    cv2.imwrite(r"C:\Users\Admin\OneDrive\Desktop\Ai_digitalised_document_scanner\assets\handwriting.jpg", result)
+    cv2.imwrite(r"C:\Users\Admin\OneDrive\Desktop\Ai_digitalised_document_scanner\assets\FFT_0.jpg", result)
     print("Preprocessing done — check assets/test_output.jpg")
