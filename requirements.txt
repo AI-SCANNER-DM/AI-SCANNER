@@ -1,0 +1,41 @@
+# AI & Machine Learning
+torch
+torchvision
+torchaudio
+transformers
+accelerate
+sentencepiece
+tiktoken
+safetensors
+
+# OCR
+pytesseract
+
+# Image Processing
+opencv-python
+Pillow
+numpy
+
+# PDF & Document Generation
+reportlab
+python-docx
+
+# GUI
+customtkinter
+
+# LangChain (Future Enhancement)
+langchain
+langchain-community
+langchain-core
+
+# Vector Database (Future Enhancement)
+chromadb
+
+# Hugging Face
+datasets
+huggingface-hub
+
+# Utilities
+tqdm
+requests
+python-dotenv
