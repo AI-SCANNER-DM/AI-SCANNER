@@ -1,11 +1,8 @@
-# formatter/font_convertor.py
 
-# Map user-friendly font names to actual font file paths
-# You'll need .ttf font files for anything beyond default PDF fonts
 FONT_MAP = {
-    "Arial": "Helvetica",           # built-in PDF font, no file needed
-    "Times New Roman": "Times-Roman",  # built-in PDF font
-    "Courier New": "Courier",       # built-in PDF font
+    "Arial": "Helvetica",          
+    "Times New Roman": "Times-Roman",  
+    "Courier New": "Courier",      
 }
 
 def convert_font(text: str, chosen_font: str):
@@ -14,7 +11,7 @@ def convert_font(text: str, chosen_font: str):
     Returns a dict with the text and the resolved font name
     that pdf_generator.py can use directly.
     """
-    resolved_font = FONT_MAP.get(chosen_font, "Helvetica")  # default fallback
+    resolved_font = FONT_MAP.get(chosen_font, "Helvetica")  
 
     return {
         "text": text,

@@ -43,3 +43,4 @@ def generate_pdf(formatted_data: dict, output_path: str = "assets/output.pdf"):
 
     c.save()
     print(f"PDF saved to {os.path.abspath(output_path)}")
+
