@@ -2,13 +2,8 @@ from transformers import AutoProcessor, VisionEncoderDecoderModel
 from PIL import Image
 import torch
 
-processor = AutoProcessor.from_pretrained(
-    "microsoft/trocr-base-handwritten"
-)
-
-model = VisionEncoderDecoderModel.from_pretrained(
-    "microsoft/trocr-base-handwritten"
-)
+processor = AutoProcessor.from_pretrained("microsoft/trocr-large-handwritten")
+model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-large-handwritten")
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model.to(device)
