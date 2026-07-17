@@ -3,44 +3,63 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 import os
 
-def generate_pdf(formatted_data: dict, output_path: str = "assets/output.pdf"):
+
+class PDFGenerator:
     """
-    Takes a dict with 'text' and 'font' (from convert_font),
-    and writes it into a PDF file.
+    Generates a PDF from recognized text.
     """
-    text = formatted_data["text"]
-    font_name = formatted_data["font"]
 
-    c = canvas.Canvas(output_path, pagesize=A4)
-    width, height = A4
+    def __init__(self):
+        self.page_size = A4
+        self.font = "Helvetica"
+        self.font_size = 12
+        self.margin = 1 * inch
+        self.line_height = 18
 
-    c.setFont(font_name, 12)
+    def generate(self, text, output_path="output/scanned_document.pdf"):
 
-    x_margin = 1 * inch
-    y_position = height - 1 * inch
-    line_height = 14
+        os.makedirs("output", exist_ok=True)
 
-    max_chars_per_line = 90  
-    words = text.split()
-    line = ""
+        pdf = canvas.Canvas(output_path, pagesize=self.page_size)
 
-    for word in words:
-        if len(line) + len(word) + 1 <= max_chars_per_line:
-            line += word + " "
-        else:
-            c.drawString(x_margin, y_position, line.strip())
-            y_position -= line_height
-            line = word + " "
+        width, height = self.page_size
 
-          
-            if y_position < 1 * inch:
-                c.showPage()
-                c.setFont(font_name, 12)
-                y_position = height - 1 * inch
+        pdf.setFont(self.font, self.font_size)
 
-    if line:
-        c.drawString(x_margin, y_position, line.strip())
+        x = self.margin
+        y = height - self.margin
 
-    c.save()
-    print(f"PDF saved to {os.path.abspath(output_path)}")
+        words = text.split()
+        line = ""
 
+        max_chars = 95
+
+        for word in words:
+
+            if len(line + word) <= max_chars:
+                line += word + " "
+
+            else:
+                pdf.drawString(x, y, line.strip())
+
+                y -= self.line_height
+
+                line = word + " "
+
+                if y < self.margin:
+
+                    pdf.showPage()
+
+                    pdf.setFont(self.font, self.font_size)
+
+                    y = height - self.margin
+
+        if line:
+            pdf.drawString(x, y, line.strip())
+
+        pdf.save()
+
+        print("\n✅ PDF Generated Successfully")
+        print("Saved at:", os.path.abspath(output_path))
+
+        return output_path

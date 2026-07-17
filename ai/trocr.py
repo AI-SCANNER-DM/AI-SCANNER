@@ -1,16 +1,20 @@
-from transformers import AutoProcessor, VisionEncoderDecoderModel
+from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from PIL import Image
 import torch
 
-processor = AutoProcessor.from_pretrained("microsoft/trocr-large-handwritten")
-model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-large-handwritten")
+processor = TrOCRProcessor.from_pretrained(
+    "microsoft/trocr-large-handwritten"
+)
+
+model = VisionEncoderDecoderModel.from_pretrained(
+    "microsoft/trocr-large-handwritten"
+)
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model.to(device)
 
 
 def recognize_text(image_path):
-
     image = Image.open(image_path).convert("RGB")
 
     pixel_values = processor(
@@ -18,7 +22,10 @@ def recognize_text(image_path):
         return_tensors="pt"
     ).pixel_values.to(device)
 
-    generated_ids = model.generate(pixel_values)
+    generated_ids = model.generate(
+        pixel_values,
+        max_new_tokens=200
+    )
 
     generated_text = processor.batch_decode(
         generated_ids,
