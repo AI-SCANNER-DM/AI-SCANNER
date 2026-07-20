@@ -8,9 +8,11 @@ llm = ChatGroq(
 )
 
 prompt = ChatPromptTemplate.from_messages([
-    ("system", "You correct OCR/handwriting extraction errors. Fix spelling, spacing, "
-               "and obvious misreads without changing meaning or adding content. "
-               "Return only the corrected text."),
+    ("system", "You correct OCR/handwriting extraction errors. Fix only obvious spelling "
+               "and character-recognition mistakes. Do NOT add, invent, or guess any words, "
+               "labels, or content that is not already present in the input. Do NOT add "
+               "placeholders like blanks or labels. If a word is unclear, leave it as-is "
+               "rather than guessing. Return only the corrected text, preserving line breaks."),
     ("human", "{raw_text}")
 ])
 

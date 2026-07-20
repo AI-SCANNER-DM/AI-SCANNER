@@ -29,13 +29,21 @@ def group_into_lines(results, y_threshold=15):
             current_y = y if current_y is None else current_y
         else:
             current_line.sort(key=lambda b: b[0])
-            lines.append([bb for (_, bb) in current_line])
+            lines.append({
+                "boxes": [bb for (_, bb) in current_line],
+                "y": current_y,
+                "x_start": min(x for x, _ in current_line)
+            })
             current_line = [(x, bbox)]
             current_y = y
 
     if current_line:
         current_line.sort(key=lambda b: b[0])
-        lines.append([bb for (_, bb) in current_line])
+        lines.append({
+            "boxes": [bb for (_, bb) in current_line],
+            "y": current_y,
+            "x_start": min(x for x, _ in current_line)
+        })
 
     return lines
 
@@ -58,7 +66,8 @@ def hybrid_extract(image_path):
     os.makedirs("assets/hybrid_lines", exist_ok=True)
     full_text = ""
 
-    for i, line_boxes in enumerate(lines):
+    for i, line in enumerate(lines):
+        line_boxes = line["boxes"]
         xs_min, ys_min, xs_max, ys_max = [], [], [], []
         for bbox in line_boxes:
             (tl, tr, br, bl) = bbox
@@ -83,10 +92,9 @@ def hybrid_extract(image_path):
 
     return full_text, cleaned_text
 
-
 if __name__ == "__main__":
     try:
-        test_path = r"C:\Users\Admin\OneDrive\Desktop\Ai_digitalised_document_scanner\assets\handwriting_small_test.jpg"
+        test_path = r"C:\Users\LABI\AI-SCANNER\assets\handwriting.jpg"
         raw_text, cleaned_text = hybrid_extract(test_path)
 
         print("\n--- RAW HYBRID EXTRACTED TEXT ---")
