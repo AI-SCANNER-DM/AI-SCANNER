@@ -1,33 +1,35 @@
-from ai.trocr import recognize_text
-from formatter.pdf_generator import PDFGenerator
+# main.py
 import os
+from ai.hybrid_ocr import hybrid_extract
+from formatter.pdf_generator import generate_pdf
 
 
 def main():
+    image_path = r"assets\handwriting.jpg"
+    output_path = r"output\scanned_document.pdf"
 
-    image_path = "assets/handwriting.jpg"
-
-    # Check if image exists
     if not os.path.exists(image_path):
-        print(f"Error: '{image_path}' not found.")
+        print(f"ERROR: Input image not found at {image_path}")
         return
 
     print("Loading image...")
-    print("Running AI OCR...\n")
+    print("Running AI OCR...")
 
-    # OCR
-    text = recognize_text(image_path)
+    raw_text, cleaned_text = hybrid_extract(image_path)
 
-    print("========== RECOGNIZED TEXT ==========\n")
-    print(text)
-    print("\n=====================================\n")
+    print("========== RECOGNIZED TEXT ==========")
+    print(cleaned_text if cleaned_text.strip() else raw_text)
+    print("=====================================")
 
-    # Generate PDF
-    pdf = PDFGenerator()
-    pdf_path = pdf.generate(text)
+    final_text = cleaned_text if cleaned_text.strip() else raw_text
 
-    print("\nProject completed successfully!")
-    print(f"PDF saved at: {pdf_path}")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    generate_pdf(final_text, output_path)
+
+    print("✅ PDF Generated Successfully")
+    print(f"Saved at: {os.path.abspath(output_path)}")
+    print("Project completed successfully!")
+    print(f"PDF saved at: {output_path}")
 
 
 if __name__ == "__main__":
